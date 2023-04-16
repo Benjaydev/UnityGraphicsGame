@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4821696760472322890}
+  - component: {fileID: 2804024991879376553}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2804024991879376553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8100769110376164276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3c82e3f2de23304e8bf367f8063f5b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 8499215783355836519}
 --- !u!1001 &3020490270181368279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97,7 +111,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 18320ce3c84e75b44af982dbb75a71a1, type: 2}
     - target: {fileID: 919132149155446097, guid: 611cff9488870c7498099d624f71a170, type: 3}
       propertyPath: m_Name
-      value: Hip Hop Dancing (1)
+      value: Robot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 611cff9488870c7498099d624f71a170, type: 3}
