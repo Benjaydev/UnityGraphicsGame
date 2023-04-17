@@ -46,6 +46,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 8499215783355836519}
+  robotName: 
+  colourSequence:
+  - 
+  - 
+  - 
+  particleSequence:
+  - 
+  - 
+  - 
 --- !u!1001 &3020490270181368279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104,7 +113,7 @@ PrefabInstance:
     - target: {fileID: -7303206622515095964, guid: 611cff9488870c7498099d624f71a170, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 18320ce3c84e75b44af982dbb75a71a1, type: 2}
+      objectReference: {fileID: 2100000, guid: f6db4835db4310a40b0dc165e672baba, type: 2}
     - target: {fileID: -7303206622515095964, guid: 611cff9488870c7498099d624f71a170, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 

@@ -1,20 +1,95 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    public static PlayerScript instance;
 
-    // Start is called before the first frame update
-    void Start()
+    private UIScript ui;
+    private PostProcessor postProcessor;
+
+    [SerializeField]
+    private Transform paperCameraLocation;
+
+    [Header("Security Cameras")]
+    [System.NonSerialized]
+    public bool securityCameraAnomaly = false;
+    private int securityAnomalyCount = 0;
+    private bool securityCameraAnomalyHasHappened = false;
+    [SerializeField]
+    private TextMeshProUGUI containmentText;
+    [SerializeField]
+    private RobotScript securityDisplayRobot;
+    [SerializeField]
+    private Material securityCameraMaterial;
+    [SerializeField]
+    private Transform securityCameraLocation;
+    [SerializeField]
+    private Transform securityCameraAnomalyLocation;
+
+    [Header("Robots")]
+    [SerializeField]
+    private MovingPlatform movingPlatform;
+
+
+
+    private void Awake()
     {
-        
+        instance = this;
+        ui = GetComponentInChildren<UIScript>();
+        postProcessor = GetComponent<PostProcessor>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ActivateSecurityCamera(string animation)
     {
-        
+        if (!securityCameraAnomalyHasHappened)
+        {
+
+            if ((Random.Range(0, 5) == 0 && securityAnomalyCount > 2) || securityAnomalyCount == 8)
+            {
+                securityCameraAnomaly = true;
+                securityCameraAnomalyHasHappened = true;
+
+                securityDisplayRobot.PlayAnimation("Idle");
+                MoveCameraTo(securityCameraAnomalyLocation);
+                ui.ShowAnimationView();
+
+                containmentText.text = "<color=red>I can see you.</color>";
+                containmentText.fontSize = 35;
+
+                securityCameraMaterial.SetFloat("_PixelSize", 0.003f);
+                securityCameraMaterial.SetFloat("_Movement", 4f);
+                securityCameraMaterial.SetFloat("_Distortion", 10f);
+
+                postProcessor.ApplyMaterial(securityCameraMaterial);
+                return;
+            }
+            securityAnomalyCount++;
+        }
+
+
+        securityDisplayRobot.PlayAnimation(animation);
+        MoveCameraTo(securityCameraLocation);
+        ui.ShowAnimationView();
+
+        containmentText.text = "Containment <color=red>~Redacted</color>";
+        containmentText.fontSize = 15;
+
+        securityCameraMaterial.SetFloat("_PixelSize", 0.0003f);
+        securityCameraMaterial.SetFloat("_Movement", 1.5f);
+        securityCameraMaterial.SetFloat("_Distortion", 15f);
+
+        postProcessor.ApplyMaterial(securityCameraMaterial);
+    }
+
+    public void DeactivateSecurityCamera()
+    {
+        securityCameraAnomaly = false;
+        MoveCameraTo(paperCameraLocation);
+        ui.ShowPaperView();
+        postProcessor.RemoveMaterial(securityCameraMaterial);
     }
 
     public void MoveCameraToTimed(Transform location)

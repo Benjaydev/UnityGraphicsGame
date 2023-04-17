@@ -64,6 +64,12 @@ public class RobotScript : MonoBehaviour
         Debug.Log(CombinationIDGenerator.Instance.GetWord(particleSequence));
         Debug.Log(robotName);
     }
+
+    private void Update()
+    {
+        transform.LookAt(PlayerScript.instance.transform);    
+    }
+
     public void PlayAnimation(int id)
     {
         anim.SetTrigger(animations[id]);

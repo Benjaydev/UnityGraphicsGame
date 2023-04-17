@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MovingPlatform
-  m_Shader: {fileID: 4800000, guid: aa17a206f2ca6624cad4043142630a3a, type: 3}
+  m_Name: RobotShaderRim
+  m_Shader: {fileID: 4800000, guid: 6b70a98ace1193145985d975d72dbe0e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -21,17 +21,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d8f4bbbfa37be9b4494843bbd64cd605, type: 3}
-        m_Scale: {x: 132.98, y: 1}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Glossiness: 0
-    - _Metallic: 0.142
-    - _MoveSpeedMult: 100
-    - _MoveSpeedX: 1
-    - _MoveSpeedY: 0
+    - _Glossiness: 0.5
+    - _Metallic: 0
+    - _RimPower: 0.95
     m_Colors:
-    - _Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
-    - _MoveSpeed: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 1, g: 0.10849059, b: 0.96434224, a: 1}
+    - _RimColor: {r: 1, g: 0, b: 0.028783798, a: 1}
   m_BuildTextureStacks: []
