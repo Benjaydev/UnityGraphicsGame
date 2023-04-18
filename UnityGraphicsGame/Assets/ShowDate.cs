@@ -15,7 +15,7 @@ public class ShowDate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        string date = System.DateTime.Now.ToString("dd/MM/2105  hh:mm:ss.fff");
+        string date = System.DateTime.Now.ToString("dd/MM/1989  hh:mm:ss.fff");
 
         text.text = date;
     }

@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EdgeDetectionMat
-  m_Shader: {fileID: 4800000, guid: d3e69314b400fe241af9c8ba962c558f, type: 3}
+  m_Name: SecurityCameraMat
+  m_Shader: {fileID: 4800000, guid: 826d0dc164a470144a53d2eae54dc49a, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -26,6 +26,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Strength: 20
+    - _Distortion: 15
+    - _Movement: 1.5
+    - _PixelSize: 0.0003
     m_Colors: []
   m_BuildTextureStacks: []

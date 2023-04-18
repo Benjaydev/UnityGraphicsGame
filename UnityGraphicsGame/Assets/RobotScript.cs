@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RobotScript : MonoBehaviour
 {
-    private Dictionary<string, string[]> allAnimations = new Dictionary<string, string[]>() {
+    private static Dictionary<string, string[]> allAnimations = new Dictionary<string, string[]>() {
         { "Walk", 
             new string[2] {"Walking", "1" } },
         { "DanceRegular", 
@@ -31,9 +31,19 @@ public class RobotScript : MonoBehaviour
     [SerializeField]
     private Animator anim;
 
+    [SerializeField]
+    private SkinnedMeshRenderer mRenderer;
+
+    [SerializeField]
+    private bool shouldFacePlayer = true;
+
     public string robotName;
-    public string[] colourSequence = new string[3];
-    public string[] particleSequence = new string[3];
+    public string[] idSequence = new string[3];
+    public string typeSequence = "";
+
+    [System.NonSerialized]
+    public ParticleSystem[] sprayParticles;
+
 
     private void Start()
     {
@@ -47,9 +57,9 @@ public class RobotScript : MonoBehaviour
                 if (!animations.Contains(randomItem))
                 {
                     // Get id
-                    colourSequence[i] = index.ToString();
+                    idSequence[i] = index.ToString();
                     // Get category
-                    particleSequence[i] = allAnimations[randomItem][1].ToString();
+                    typeSequence += allAnimations[randomItem][1].ToString();
                     animations[i] = randomItem;
                 }
 
@@ -58,16 +68,15 @@ public class RobotScript : MonoBehaviour
         }
 
         robotName = "Robot of " + allAnimations[animations[0]][0] + ", " + allAnimations[animations[1]][0] + ", and " + allAnimations[animations[2]][0];
-
-        Debug.Log(colourSequence[0] + " " + colourSequence[1] + " " + colourSequence[2]);
-        Debug.Log(particleSequence[0] + " " + particleSequence[1] + " " + particleSequence[2]);
-        Debug.Log(CombinationIDGenerator.Instance.GetWord(particleSequence));
-        Debug.Log(robotName);
     }
 
     private void Update()
     {
-        transform.LookAt(PlayerScript.instance.transform);    
+        if (shouldFacePlayer)
+        {
+            transform.LookAt(PlayerScript.instance.transform);
+        }
+  
     }
 
     public void PlayAnimation(int id)
@@ -77,5 +86,68 @@ public class RobotScript : MonoBehaviour
     public void PlayAnimation(string id)
     {
         anim.SetTrigger(id);
+    }
+
+    public void Paint(string[] id, string type)
+    {
+        Color mainCol = Color.white;
+        
+        if(type != null)
+        {
+            // For each number in type sequence, set the rgb components
+            for (int i = 0; i < 3; i++)
+            {
+                switch (type[i])
+                {
+                    case '1':
+                        mainCol[i] = (1f / 3f);
+                        break;
+                    case '2':
+                        mainCol[i] = (2f / 3f);
+                        break;
+                    case '3':
+                        mainCol[i] = 1f;
+                        break;
+
+                }
+            }
+        }
+        
+
+        float[] parameters = new float[3];
+
+        int idVal1 = 0;
+        int idVal2 = 0;
+        int idVal3 = 0;
+
+        int.TryParse(id[0], out idVal1);
+        int.TryParse(id[1], out idVal2);
+        int.TryParse(id[2], out idVal3);
+
+
+        // Smoothness
+        parameters[0] = (float)idVal1 / 8;
+        // Metallic
+        parameters[1] = (float)idVal2 / 8;
+        // Rim Power
+        parameters[2] = Mathf.Max(0.5f, (8 - (float)idVal2));
+
+        Color rimCol = new Color((float)idVal1 / 8, (float)idVal2 / 8, (float)idVal3 / 8);
+
+        mRenderer.material.SetColor("_Color", mainCol);
+        mRenderer.material.SetColor("_RimColor", rimCol);
+
+        mRenderer.material.SetFloat("_Glossiness", parameters[0]);
+        mRenderer.material.SetFloat("_Metallic", parameters[1]);
+        mRenderer.material.SetFloat("_RimPower", parameters[2]);
+
+
+        ParticleSystem.MainModule main1 = sprayParticles[0].main;
+        ParticleSystem.MainModule main2 = sprayParticles[1].main;
+        main1.startColor = mainCol;
+        main2.startColor = rimCol;
+        sprayParticles[0].Play();
+        sprayParticles[1].Play();
+
     }
 }

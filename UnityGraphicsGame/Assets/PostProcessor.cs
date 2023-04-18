@@ -9,7 +9,8 @@ public class PostProcessor : MonoBehaviour
 
     private void Awake()
     {
-        if (Camera.main.depthTextureMode != DepthTextureMode.Depth)
+
+        if (Camera.main != null && Camera.main.depthTextureMode != DepthTextureMode.Depth)
             Camera.main.depthTextureMode = DepthTextureMode.Depth;
     }
 

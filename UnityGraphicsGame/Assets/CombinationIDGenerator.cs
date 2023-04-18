@@ -103,6 +103,14 @@ public class CombinationIDGenerator : MonoBehaviour
         string comb = string.Join("", id);
         return possibilities[comb];
     }
+    public string GetWord(string id)
+    {
+        return possibilities[id];
+    }
+    public string GetId(string word)
+    {
+        return possibilities.FirstOrDefault(x => x.Value == word).Key;
+    }
 
     public void GeneratePossibilities()
     {

@@ -20,6 +20,10 @@ public class SubmissionSidebar : MonoBehaviour
     [SerializeField]
     private TMP_Dropdown dropdown;
 
+    private void Awake()
+    {
+        animator.keepAnimatorControllerStateOnDisable = true;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +35,7 @@ public class SubmissionSidebar : MonoBehaviour
 
         List<string> values = Enumerable.ToList(CombinationIDGenerator.Instance.possibilities.Values);
         values.Sort();
+        values.Insert(0, clearCharacter);
         dropdown.AddOptions(values);
     }
 
@@ -49,6 +54,10 @@ public class SubmissionSidebar : MonoBehaviour
         }
     }
 
+    public void OnChange()
+    {
+        PlayerScript.instance.PaintRobot();
+    }
 
 
     // Stop animations from being called for small duration
@@ -72,6 +81,7 @@ public class SubmissionSidebar : MonoBehaviour
 
     public void IdButtonPress(int id)
     {
+
         foreach (TextMeshProUGUI disp in idDisplays)
         {
             // Clear
@@ -85,9 +95,28 @@ public class SubmissionSidebar : MonoBehaviour
             if(disp.text == clearCharacter)
             {
                 disp.text = id.ToString();
+                OnChange();
                 return;
             }
         }
+
+        if(id == -1)
+        {
+            OnChange();
+        }
     }
 
+    public string[] GetIdSequence()
+    {
+        string[] sequence = new string[idDisplays.Length];
+        for(int i = 0; i < idDisplays.Length; i++)
+        {
+            sequence[i] = idDisplays[i].text.ToString();
+        }
+        return sequence;
+    }
+    public string GetKeycode()
+    {
+        return dropdown.options[dropdown.value].text;
+    }
 }

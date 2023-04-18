@@ -3,7 +3,10 @@ Shader "Hidden/EdgeDetection"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _OutlineColour("Outline Colour", Color) = (1,0,0,1)
         _Strength ("Strength", float) = 5
+        _FlickerSpeed ("Flicker Speed", float) = 0.1
+
     }
     SubShader
     {
@@ -41,6 +44,8 @@ Shader "Hidden/EdgeDetection"
 
             sampler2D _MainTex;
             float _Strength;
+            float _FlickerSpeed;
+            fixed4 _OutlineColour;
 
             float sobel(sampler2D tex, float2 uv) {
                 float2 delta = float2(1.0f / _ScreenParams.x, 1.0f / _ScreenParams.y);
@@ -65,8 +70,12 @@ Shader "Hidden/EdgeDetection"
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
                 // just invert the colors
-                float edge = 1 - saturate(sobel(_CameraDepthTexture, i.uv));
-                return col * edge;
+                fixed4 edge = (1-col) * saturate(sobel(_CameraDepthTexture, i.uv));
+                edge = edge * abs(sin(_Time.y*_FlickerSpeed)) * (1 - _OutlineColour);
+
+                col = (col - edge);
+
+                return col * (1-edge);
             }
             ENDCG
         }

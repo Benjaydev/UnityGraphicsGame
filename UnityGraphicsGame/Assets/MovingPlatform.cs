@@ -20,8 +20,12 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField]
     private GameObject robotPrefab;
 
-    [System.NonSerialized]
+    [NonSerialized]
     public RobotScript currentRobot;
+
+    [SerializeField]
+    private ParticleSystem[] sprayParticles;
+
 
     private bool isMoving = false;
     private bool destroyRobot = false;
@@ -78,12 +82,14 @@ public class MovingPlatform : MonoBehaviour
         }
 
         currentRobot = Instantiate(robotPrefab).GetComponent<RobotScript>();
+        currentRobot.sprayParticles = sprayParticles;
         currentRobot.transform.position = robotSpawnLocation.position;
         StartMoving();
     }
     public void DestroyRobot()
     {
         destroyRobot = true;
+        currentRobot.PlayAnimation("Idle");
         StartMoving();
     }
 

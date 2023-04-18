@@ -46,15 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 8499215783355836519}
+  mRenderer: {fileID: 3697212991714506675}
+  shouldFacePlayer: 1
   robotName: 
-  colourSequence:
+  idSequence:
   - 
   - 
   - 
-  particleSequence:
-  - 
-  - 
-  - 
+  typeSequence: 
 --- !u!1001 &3020490270181368279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -152,5 +151,10 @@ Animator:
 --- !u!4 &3341766137549571644 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 611cff9488870c7498099d624f71a170, type: 3}
+  m_PrefabInstance: {fileID: 3020490270181368279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &3697212991714506675 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7303206622515095964, guid: 611cff9488870c7498099d624f71a170, type: 3}
   m_PrefabInstance: {fileID: 3020490270181368279}
   m_PrefabAsset: {fileID: 0}

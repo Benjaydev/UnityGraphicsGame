@@ -9,6 +9,8 @@ public class PlayerScript : MonoBehaviour
 
     private UIScript ui;
     private PostProcessor postProcessor;
+    [SerializeField]
+    private SubmissionSidebar sidebar;
 
     [SerializeField]
     private Transform paperCameraLocation;
@@ -56,7 +58,7 @@ public class PlayerScript : MonoBehaviour
                 MoveCameraTo(securityCameraAnomalyLocation);
                 ui.ShowAnimationView();
 
-                containmentText.text = "<color=red>I can see you.</color>";
+                containmentText.text = "<color=red>BOO! *Scary Noise*</color>";
                 containmentText.fontSize = 35;
 
                 securityCameraMaterial.SetFloat("_PixelSize", 0.003f);
@@ -117,5 +119,40 @@ public class PlayerScript : MonoBehaviour
         transform.rotation = lastRotation;
 
 
+    }
+
+    public void PaintRobot()
+    {
+        movingPlatform.currentRobot.Paint(sidebar.GetIdSequence(), CombinationIDGenerator.Instance.GetId(sidebar.GetKeycode()));
+    }
+
+
+    public void SubmitRobot()
+    {
+
+        movingPlatform.DestroyRobot();
+        
+
+        StartCoroutine(SubmitRobotCo());
+    }
+    IEnumerator SubmitRobotCo()
+    {
+        bool success = false;
+        if (CombinationIDGenerator.Instance.GetWord(movingPlatform.currentRobot.typeSequence) == sidebar.GetKeycode())
+        {
+            string[] actualSequence = movingPlatform.currentRobot.idSequence;
+            string[] chosenSequence = sidebar.GetIdSequence();
+            if (actualSequence[0] == chosenSequence[0] && actualSequence[1] == chosenSequence[1] && actualSequence[2] == chosenSequence[2])
+            {
+                success = true;
+            }
+        }
+
+        yield return new WaitForSeconds(8);
+
+        if (success)
+        {
+            Debug.Log("Success");
+        }
     }
 }
