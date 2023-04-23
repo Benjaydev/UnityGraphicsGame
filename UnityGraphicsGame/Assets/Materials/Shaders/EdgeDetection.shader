@@ -69,7 +69,7 @@ Shader "Hidden/EdgeDetection"
             fixed4 frag(v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
-                // just invert the colors
+
                 fixed4 edge = (1-col) * saturate(sobel(_CameraDepthTexture, i.uv));
                 edge = edge * abs(sin(_Time.y*_FlickerSpeed)) * (1 - _OutlineColour);
 
