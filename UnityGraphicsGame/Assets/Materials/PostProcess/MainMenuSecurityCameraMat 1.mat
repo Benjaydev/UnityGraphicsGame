@@ -26,8 +26,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Distortion: 29
-    - _Movement: 17
+    - _Distortion: 15.79
+    - _Movement: 9.4
     - _PixelSize: 0.0003
     m_Colors: []
   m_BuildTextureStacks: []

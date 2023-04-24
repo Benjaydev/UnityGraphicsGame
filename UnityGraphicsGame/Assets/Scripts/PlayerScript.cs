@@ -32,8 +32,7 @@ public class PlayerScript : MonoBehaviour
     private Transform securityCameraAnomalyLocation;
 
     [Header("Robots")]
-    [SerializeField]
-    private MovingPlatform movingPlatform;
+    public MovingPlatform movingPlatform;
 
     [System.NonSerialized]
     public int lives = 3;
@@ -159,16 +158,46 @@ public class PlayerScript : MonoBehaviour
         {
             score++;
             ui.SetScore(score);
+            StartCoroutine(FadeColorVignette(Color.green, 2, 2));
         }
         else
         {
             lives--;
             ui.SetLives(lives);
-            if(lives <= 0)
+            if (lives <= 0)
             {
                 Time.timeScale = 0;
                 ui.ShowLoseScreen();
             }
+            StartCoroutine(FadeColorVignette(Color.red, 2, 2));
+        }
+
+
+    IEnumerator FadeColorVignette(Color goal, float duration, float speed = 1)
+    {
+            float timer = 0;
+            Color colour = postProcessor.mats[0].GetColor("_Colour");
+            Color newCol = colour;
+            while (timer < duration)
+            {
+                // Lerp to new colour
+                if (timer < duration / 2)
+                {
+                    newCol = Color.Lerp(newCol, goal, Time.deltaTime);
+
+                }
+                // Lerp back to original colour
+                else
+                {
+                    newCol = Color.Lerp(newCol, colour, Time.deltaTime * speed);
+                }
+                postProcessor.mats[0].SetColor("_Colour", newCol);
+                timer += Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime * speed);
+            }
+            postProcessor.mats[0].SetColor("_Colour", colour);
         }
     }
+
+
 }

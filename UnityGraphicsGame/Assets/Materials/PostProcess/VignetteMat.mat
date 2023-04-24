@@ -29,5 +29,5 @@ Material:
     - _Extent: 15
     - _Intensity: 0.2
     m_Colors:
-    - _Colour: {r: 0, g: 0, b: 0, a: 0}
+    - _Colour: {r: 0.0027111, g: 0.10733815, b: 0, a: 0.11004936}
   m_BuildTextureStacks: []

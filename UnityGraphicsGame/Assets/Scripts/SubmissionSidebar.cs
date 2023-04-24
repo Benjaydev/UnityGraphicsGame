@@ -56,7 +56,20 @@ public class SubmissionSidebar : MonoBehaviour
 
     public void OnChange()
     {
-        PlayerScript.instance.PaintRobot();
+        if (!PlayerScript.instance.movingPlatform.isMoving)
+        {
+            PlayerScript.instance.PaintRobot();
+        }
+        else
+        {
+            dropdown.value = 0;
+            dropdown.RefreshShownValue();
+            foreach (TextMeshProUGUI disp in idDisplays)
+            {
+                disp.text = clearCharacter;
+            }
+        }
+
     }
 
 
